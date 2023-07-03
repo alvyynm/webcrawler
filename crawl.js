@@ -5,7 +5,14 @@ function getURLsFromHTML(htmlBody, baseURL) {
   const dom = new JSDOM(htmlBody);
   const linkElements = dom.window.document.querySelectorAll("a");
   for (const linkElement of linkElements) {
-    urls.push(linkElement.href);
+    if (linkElement.href.startsWith("/")) {
+      // relative url
+      const output = `${baseURL}${linkElement.href}`;
+      urls.push(output);
+    } else {
+      // absolute url
+      urls.push(linkElement.href);
+    }
   }
   return urls;
 }
