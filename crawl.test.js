@@ -1,4 +1,4 @@
-const { normalizeURL } = require("./crawl.js");
+const { normalizeURL, getURLsFromHTML } = require("./crawl.js");
 const { test, expect } = require("@jest/globals");
 
 test("normalizeURL strip protocol from URL", () => {
@@ -19,5 +19,19 @@ test("normalizeURL remove capitalization", () => {
   const input = "https://blog.ALvinwanjala.com/posts/2014";
   const actual = normalizeURL(input);
   const expected = "blog.alvinwanjala.com/posts/2014";
+  expect(actual).toEqual(expected);
+});
+
+test("getURLsFromHTML for absolute URLs", () => {
+  const inputHTMLBody = `
+  <html>
+    <body>
+        <a href="https://blog.alvinwanjala.com/">Alvin's Blog</a>
+    </body>
+  </html>
+  `;
+  const inputBaseURL = `https://blog.alvinwanjala.com`;
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = ["https://blog.alvinwanjala.com/"];
   expect(actual).toEqual(expected);
 });
