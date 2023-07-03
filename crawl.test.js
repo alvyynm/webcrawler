@@ -49,3 +49,21 @@ test("getURLsFromHTML for relative URLs", () => {
   const expected = ["https://blog.alvinwanjala.com/posts/2014/"];
   expect(actual).toEqual(expected);
 });
+
+test("getURLsFromHTML for multiple URLs", () => {
+  const inputHTMLBody = `
+  <html>
+    <body>
+        <a href="https://blog.alvinwanjala.com/posts/2014/">Alvin's Blog</a>
+        <a href="/posts/2014/1">First blog post</a>
+    </body>
+  </html>
+  `;
+  const inputBaseURL = `https://blog.alvinwanjala.com`;
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = [
+    "https://blog.alvinwanjala.com/posts/2014/",
+    "https://blog.alvinwanjala.com/posts/2014/1",
+  ];
+  expect(actual).toEqual(expected);
+});
