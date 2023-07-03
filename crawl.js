@@ -7,11 +7,20 @@ function getURLsFromHTML(htmlBody, baseURL) {
   for (const linkElement of linkElements) {
     if (linkElement.href.startsWith("/")) {
       // relative url
-      const output = `${baseURL}${linkElement.href}`;
-      urls.push(output);
+      try {
+        const urlObj = new URL(`${baseURL}${linkElement.href}`);
+        urls.push(urlObj.href);
+      } catch (error) {
+        console.log(`invalid relative url found: ${error.message}`);
+      }
     } else {
       // absolute url
-      urls.push(linkElement.href);
+      try {
+        const urlObj = new URL(linkElement.href);
+        urls.push(urlObj.href);
+      } catch (error) {
+        console.log(`invalid absolute url found: ${error.message}`);
+      }
     }
   }
   return urls;
