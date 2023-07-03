@@ -7,3 +7,10 @@ test("normalizeURL strip protocol from URL", () => {
   const expected = "blog.alvinwanjala.com/posts/2014";
   expect(actual).toEqual(expected);
 });
+
+test("normalizeURL strip trailing slash from URL", () => {
+  const input = "https://blog.alvinwanjala.com/posts/2014/";
+  const actual = normalizeURL(input);
+  const expected = "blog.alvinwanjala.com/posts/2014";
+  expect(actual).toEqual(expected);
+});
